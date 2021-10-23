@@ -49,6 +49,6 @@ public class Main {
         else{
             System.out.println("YOUR INPUT IS NOT VALID...");
         }
-        
+
     }
 }
