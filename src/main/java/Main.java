@@ -19,13 +19,11 @@ public class Main {
         BarChart columnDistributionChart = new BarChart("Columns Distribution",
                 "Columns Distribution", s.getColumnsDistribution(), "Columns");
         columnDistributionChart.pack( );
-        //RefineryUtilities.centerFrameOnScreen( chart );
         columnDistributionChart.setVisible( true );
 
         BarChart rowsDistributionChart = new BarChart("Rows Distribution",
                 "Rows Distribution", s.getColumnsDistribution(), "Rows");
         rowsDistributionChart.pack( );
-        //RefineryUtilities.centerFrameOnScreen( chart );
         rowsDistributionChart.setVisible( true );
 
 
