@@ -24,7 +24,6 @@ public class Main {
             System.out.println("TABLES NUMBER: " + s.getTablesNumber());
             System.out.println("COLUMNS PER TABLE AVERAGE: " + s.getColumnsPerTableAvg());
             System.out.println("ROWS PER TABLE AVERAGE: " + s.getRowsPerTableAvg());
-            System.out.println("ROWS PER TABLE AVERAGE: " + s.getColumnsPerTableAvg());
             System.out.println("COLUMNS DISTRIBUTION: \n" + s.getColumnsDistribution());
             System.out.println("ROWS DISTRIBUTION: \n" + s.getRowsDistribution());
             System.out.println("NULL VALUES PER TABLE AVERAGE: " + s.getNullValuePerTableAvg());

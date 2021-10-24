@@ -21,7 +21,7 @@ public class BarChart extends ApplicationFrame {
                 "Category",
                 "Score",
                 createDataset(map, type),
-                PlotOrientation.HORIZONTAL,
+                PlotOrientation.VERTICAL,
                 true, true, false);
 
         ChartPanel chartPanel = new ChartPanel( barChart );
