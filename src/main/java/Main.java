@@ -3,7 +3,6 @@ import statistics.BarChart;
 import statistics.Statistics;
 
 import java.io.BufferedReader;
-import java.io.Console;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -24,9 +23,12 @@ public class Main {
 
             System.out.println("TABLES NUMBER: " + s.getTablesNumber());
             System.out.println("COLUMNS PER TABLE AVERAGE: " + s.getColumnsPerTableAvg());
+            System.out.println("ROWS PER TABLE AVERAGE: " + s.getRowsPerTableAvg());
+            System.out.println("ROWS PER TABLE AVERAGE: " + s.getColumnsPerTableAvg());
             System.out.println("COLUMNS DISTRIBUTION: \n" + s.getColumnsDistribution());
             System.out.println("ROWS DISTRIBUTION: \n" + s.getRowsDistribution());
             System.out.println("NULL VALUES PER TABLE AVERAGE: " + s.getNullValuePerTableAvg());
+            System.out.println("DISTINCT VALUES PER COLUMN: " + s.getDistinctValues());
 
             BarChart columnDistributionChart = new BarChart("Columns Distribution",
                     "Columns Distribution", s.getColumnsDistribution(), "Columns");
@@ -34,9 +36,14 @@ public class Main {
             columnDistributionChart.setVisible( true );
 
             BarChart rowsDistributionChart = new BarChart("Rows Distribution",
-                    "Rows Distribution", s.getColumnsDistribution(), "Rows");
+                    "Rows Distribution", s.getRowsDistribution(), "Rows");
             rowsDistributionChart.pack( );
             rowsDistributionChart.setVisible( true );
+
+            BarChart distinctValuesDistributionChart = new BarChart("Distinct Value Distribution Per Column",
+                    "Distinct Value Distribution Per Column", s.getDistinctValuesDistribution(), "Columns");
+            distinctValuesDistributionChart.pack( );
+            distinctValuesDistributionChart.setVisible( true );
 
         }
         else if(Integer.parseInt(str)==2){

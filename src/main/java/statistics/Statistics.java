@@ -20,10 +20,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 @JsonDeserialize
 @JsonSerialize
@@ -32,18 +29,23 @@ public class Statistics {
 
     private int tablesNumber;
     private int columnsPerTableAvg;
+    private int rowsPerTableAvg;
     private int nullValuePerTableAvg;
     private HashMap<Integer, Integer> rowsDistribution;
     private HashMap<Integer, Integer> columnsDistribution;
-    private int distinctValuesDistribution;
+    private HashMap<Integer, Integer> distinctValuesDistribution;
+    private int distinctValues;
 
     public Statistics() throws IOException {
         WrapperDTO statsDTO = stats();
         this.tablesNumber = statsDTO.getTablesWrapper();
         this.columnsPerTableAvg = statsDTO.getColumnsWrapper() / statsDTO.getTablesWrapper();
+        this.rowsPerTableAvg = statsDTO.getRowsWrapper() / statsDTO.getTablesWrapper();
         this.rowsDistribution = statsDTO.getRowsDistributionWrapper();
         this.columnsDistribution = statsDTO.getColumnsDistributionWrapper();
         this.nullValuePerTableAvg = statsDTO.getNullWrapper() / statsDTO.getTablesWrapper();
+        this.distinctValues = statsDTO.getDistinctValuesWrapper();
+        this.distinctValuesDistribution = statsDTO.getDistinctValuesDistributionMap();
     }
 
     private WrapperDTO stats(){
@@ -51,11 +53,13 @@ public class Statistics {
         JsonFactory jsonFactory = new JsonFactory();
 
         var tablesWrapper = new Object(){ int tablesCount = 0; };
+        var distinctValuesWrapper = new Object(){ int distinctValues = 0; };
         var nullValuesWrapper = new Object(){ int nullCount = 0; };
         var columnsWrapper = new Object(){ int columnsCount = 0; };
         var rowsWrapper = new Object(){ int rowsCount = 0; };
         var columnsDistributionWrapper = new Object(){ HashMap<Integer, Integer> columnsDistributionCountMap = new HashMap<>(); };
         var rowsDistributionWrapper = new Object(){ HashMap<Integer, Integer> rowsDistributionCountMap = new HashMap<>(); };
+        var distinctValuesDistributionWrapper = new Object(){ HashMap<Integer, Integer> distinctValuesDistributionMap = new HashMap<>(); };
 
 
         try(BufferedReader br = new BufferedReader(new FileReader("tables.json"))) {
@@ -100,6 +104,39 @@ public class Statistics {
                     }
                }
 
+                List<HashMap<Integer, Set<String>>> columnMapList = new ArrayList<>();
+
+                for(Cell c: u.getCells()){
+                    if(c.getCoordinates().getRow() == 0){
+                        int columnIndex = c.getCoordinates().getColumn();
+                        HashMap<Integer, Set<String>> map = new HashMap<Integer, Set<String>>();
+                        map.put(columnIndex, new HashSet<String>());
+                        columnMapList.add(columnIndex, map);
+                    }
+                    else{
+                        int columnIndex = c.getCoordinates().getColumn();
+                        try { HashMap<Integer, Set<String>> map = columnMapList.get(columnIndex);
+                            map.get(columnIndex).add(c.getCleanedText());
+                        }
+                        catch (IndexOutOfBoundsException a) {  }
+                    }
+                }
+
+                for(HashMap<Integer, Set<String>> m: columnMapList){
+                    for (Map.Entry<Integer, Set<String>> entry : m.entrySet()) {
+                        Integer t = distinctValuesDistributionWrapper.distinctValuesDistributionMap.get(entry.getValue().size());
+                        if(t == null){
+                            t = 1;
+                            distinctValuesDistributionWrapper.distinctValuesDistributionMap.put(entry.getValue().size(), t);
+                        }else {
+                            t = t +1;
+                            distinctValuesDistributionWrapper.distinctValuesDistributionMap.put(entry.getValue().size(), t);
+                        }
+                        distinctValuesWrapper.distinctValues = distinctValuesWrapper.distinctValues + entry.getValue().size();
+                    }
+                }
+
+
             });
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -114,6 +151,8 @@ public class Statistics {
         statsDTO.setRowsDistributionWrapper(rowsDistributionWrapper.rowsDistributionCountMap);
         statsDTO.setColumnsDistributionWrapper(columnsDistributionWrapper.columnsDistributionCountMap);
         statsDTO.setNullWrapper(nullValuesWrapper.nullCount);
+        statsDTO.setDistinctValuesWrapper(distinctValuesWrapper.distinctValues);
+        statsDTO.setDistinctValuesDistributionMap(distinctValuesDistributionWrapper.distinctValuesDistributionMap);
 
         return statsDTO;
     }

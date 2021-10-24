@@ -14,7 +14,9 @@ public class WrapperDTO {
     private int columnsWrapper;
     private int rowsWrapper;
     private int nullWrapper;
+    private int distinctValuesWrapper;
     private HashMap<Integer, Integer> columnsDistributionWrapper;
     private HashMap<Integer, Integer> rowsDistributionWrapper;
+    private HashMap<Integer, Integer> distinctValuesDistributionMap;
 
 }
