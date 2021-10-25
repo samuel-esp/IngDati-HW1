@@ -51,7 +51,7 @@ public class Indexer {
 
         var tablesWrapper = new Object(){ int tablesCount = 0; };
 
-        try(BufferedReader br = new BufferedReader(new FileReader("Table.json"))) {
+        try(BufferedReader br = new BufferedReader(new FileReader("tables.json"))) {
             Iterator<Table> value = mapper.readValues(jsonFactory.createParser(br), Table.class);
             Analyzer defaultAnalyzer = new StandardAnalyzer();
             Map<String, Analyzer> perFieldAnalyzers = new HashMap<>();
