@@ -1,7 +1,7 @@
 import lucene.Indexer;
+import lucene.MergeListAlgorithm;
 import statistics.BarChart;
 import statistics.Statistics;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -12,6 +12,7 @@ public class Main {
 
         System.out.println("TYPE 1 TO SEE SOME STATS ...\n");
         System.out.println("TYPE 2 TO START THE INDEXING PROCESS ...\n");
+        System.out.println("TYPE 3 TO EXECUTE MERGE LIST - TOP K OVERLAP ...\n");
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String str = br.readLine();
@@ -51,9 +52,19 @@ public class Main {
             Indexer i = new Indexer();
             System.out.println("\nTASK COMPLETED");
 
+        }else if(Integer.parseInt(str)==3){
+
+            System.out.println("TYPE AN INPUT STRING ... \n");
+            String input = br.readLine();
+            System.out.println("TYPE A K ... \n");
+            String K = br.readLine();
+
+            MergeListAlgorithm m = new MergeListAlgorithm();
+            m.runPrint(input, Integer.parseInt(K));
+
         }
         else{
-            System.out.println("YOUR INPUT IS NOT VALID...");
+            System.out.println("YOUR INPUT IS NOT VALID ...");
         }
 
     }
