@@ -28,11 +28,13 @@ public class MergeListAlgorithm {
 
     public Map<Integer, Integer> run(String inputString, int K) throws IOException {
 
+        //Converto la string in token
         Converter c = new Converter();
         List<String> tokenList = c.parseKeywords(new WhitespaceAnalyzer(), "Table", inputString);
         Path path = Paths.get("target/idx");
         System.out.println(tokenList);
 
+        //Per ogni token genero una mappa Token -> Lista<Documenti>
         HashMap<String, List<Integer>> map = new HashMap<>();
         for (String token : tokenList) {
 
@@ -50,6 +52,7 @@ public class MergeListAlgorithm {
         }
 
 
+        //Creo e popolo un'altra mappa per salvarmi Documento -> Numero Ripetizioni
         HashMap<Integer, Integer> topKOverlapMergeList = new HashMap<>();
         for (
                 Map.Entry<String, List<Integer>> entry : map.entrySet()) {
@@ -68,7 +71,7 @@ public class MergeListAlgorithm {
             }
         }
 
-
+        //Ordino la mappa sui valori (i valori corrispondono al numero delle ripetizioni)
         SortMapByValueUtil sorter = new SortMapByValueUtil();
         Map<Integer, Integer> topKSorted;
         topKSorted = sorter.sortByValue(topKOverlapMergeList, false);
