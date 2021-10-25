@@ -51,13 +51,13 @@ public class Indexer {
 
         var tablesWrapper = new Object(){ int tablesCount = 0; };
 
-        try(BufferedReader br = new BufferedReader(new FileReader("miniTable.json"))) {
+        try(BufferedReader br = new BufferedReader(new FileReader("Table.json"))) {
             Iterator<Table> value = mapper.readValues(jsonFactory.createParser(br), Table.class);
             Analyzer defaultAnalyzer = new StandardAnalyzer();
             Map<String, Analyzer> perFieldAnalyzers = new HashMap<>();
             perFieldAnalyzers.put("Table", new WhitespaceAnalyzer());
 
-
+            //inizializzo analyzer, indexwriter
             Analyzer analyzer = new PerFieldAnalyzerWrapper(defaultAnalyzer, perFieldAnalyzers);
             IndexWriterConfig config = new IndexWriterConfig(analyzer);
             if (codec != null) {
@@ -79,6 +79,7 @@ public class Indexer {
 
             value.forEachRemaining((u) -> {
 
+                //Per ogni tabella creo una stringa contenente tutti i termini testuali al suo interno
                 StringBuilder stringBuilder = new StringBuilder();
 
                 for (Cell c: u.getCells()) {
