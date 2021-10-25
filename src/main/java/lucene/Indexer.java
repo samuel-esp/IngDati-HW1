@@ -33,7 +33,7 @@ public class Indexer {
 
     public Indexer() throws IOException {
 
-        Path path = Paths.get("target/idx2");
+        Path path = Paths.get("target/idx");
 
         try (Directory directory = FSDirectory.open(path)) {
             indexDocs(directory, new SimpleTextCodec());
