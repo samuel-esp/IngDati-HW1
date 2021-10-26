@@ -14,10 +14,7 @@ import org.apache.lucene.store.FSDirectory;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class MergeListAlgorithm {
 
@@ -31,7 +28,7 @@ public class MergeListAlgorithm {
 
         //Converto la string in token
         Converter c = new Converter();
-        List<String> tokenList = c.parseKeywords(new MyAnalyzer(), "Table", inputString);
+        Set<String> tokenList = c.parseKeywords(new MyAnalyzer(), "Table", inputString);
         Path path = Paths.get(new GlobalVariables().getPath());
         System.out.println(tokenList);
 
