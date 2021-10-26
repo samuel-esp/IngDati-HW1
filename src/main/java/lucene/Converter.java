@@ -7,7 +7,9 @@ import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Converter {
 
@@ -17,9 +19,9 @@ public class Converter {
         }
 
 
-        public List<String> parseKeywords(Analyzer analyzer, String field, String keywords) throws IOException {
+        public Set<String> parseKeywords(Analyzer analyzer, String field, String keywords) throws IOException {
 
-            List<String> result = new ArrayList<String>();
+            Set<String> result = new HashSet<>();
             TokenStream stream  = analyzer.tokenStream(field, new StringReader(keywords));
 
             try {
