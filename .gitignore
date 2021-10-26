@@ -4,3 +4,4 @@
 .idea
 target/
 /src/main/java/Try.java
+/stopwords.txt

@@ -1,5 +1,6 @@
 package lucene;
 
+import global.GlobalVariables;
 import org.apache.lucene.analysis.core.WhitespaceAnalyzer;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
@@ -30,19 +31,19 @@ public class MergeListAlgorithm {
 
         //Converto la string in token
         Converter c = new Converter();
-        List<String> tokenList = c.parseKeywords(new WhitespaceAnalyzer(), "Table", inputString);
-        Path path = Paths.get("target/idx");
+        List<String> tokenList = c.parseKeywords(new MyAnalyzer(), "Table", inputString);
+        Path path = Paths.get(new GlobalVariables().getPath());
         System.out.println(tokenList);
 
         //Per ogni token genero una mappa Token -> Lista<Documenti>
         HashMap<String, List<Integer>> map = new HashMap<>();
         for (String token : tokenList) {
 
-            System.out.println("EXECUTING " + token );
+            System.out.println("EXECUTING: " + token );
             IndexReader reader = DirectoryReader.open(FSDirectory.open(path));
             IndexSearcher searcher = new IndexSearcher(reader);
             TopDocs docs = searcher.search(new TermQuery(new Term("Table", token)), 20000000);
-            System.out.println("NUMBER OF DOCUMENTS FOUND FOR " + token + " " + docs.scoreDocs.length);
+            System.out.println("NUMBER OF DOCUMENTS FOUND FOR " + token + ": " + docs.scoreDocs.length);
             List<Integer> docList = new ArrayList<>();
             for (ScoreDoc doc : docs.scoreDocs) {
                 int docid = doc.doc;
