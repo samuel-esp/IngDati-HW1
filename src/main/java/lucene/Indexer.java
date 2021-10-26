@@ -2,6 +2,7 @@ package lucene;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import global.GlobalVariables;
 import models.Cell;
 import models.Table;
 import org.apache.lucene.analysis.Analyzer;
@@ -33,7 +34,7 @@ public class Indexer {
 
     public Indexer() throws IOException {
 
-        Path path = Paths.get("target/idx");
+        Path path = Paths.get(new GlobalVariables().getPath());
 
         try (Directory directory = FSDirectory.open(path)) {
             indexDocs(directory, new SimpleTextCodec());
@@ -55,7 +56,7 @@ public class Indexer {
             Iterator<Table> value = mapper.readValues(jsonFactory.createParser(br), Table.class);
             Analyzer defaultAnalyzer = new StandardAnalyzer();
             Map<String, Analyzer> perFieldAnalyzers = new HashMap<>();
-            perFieldAnalyzers.put("Table", new WhitespaceAnalyzer());
+            perFieldAnalyzers.put("Table", new MyAnalyzer());
 
             //inizializzo analyzer, indexwriter
             Analyzer analyzer = new PerFieldAnalyzerWrapper(defaultAnalyzer, perFieldAnalyzers);
