@@ -1,16 +1,32 @@
+import dto.IndexLoaderDTO;
+import global.GlobalVariables;
+import lucene.IndexLoaderUtil;
 import lucene.Indexer;
 import lucene.MergeListAlgorithm;
+import org.apache.lucene.index.DirectoryReader;
+import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.index.Term;
+import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.TermQuery;
+import org.apache.lucene.search.TopDocs;
+import org.apache.lucene.search.similarities.ClassicSimilarity;
+import org.apache.lucene.store.*;
 import statistics.BarChart;
 import statistics.Statistics;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class Main {
 
+
     public static void main(String[] args) throws IOException {
 
-
+        System.out.println("LOADING THIS TASK CAN TAKE SOME MINUTES...\n");
+        IndexLoaderDTO indexLoaderDTO = new IndexLoaderUtil().IndexerLoaderUtil();
         System.out.println("TYPE 0 TO EXIT...\n");
         System.out.println("TYPE 1 TO SEE SOME STATS ...\n");
         System.out.println("TYPE 2 TO START THE INDEXING PROCESS ...\n");
@@ -57,7 +73,8 @@ public class Main {
 
                 System.out.println("INDEXING ...\n");
                 Indexer i = new Indexer();
-
+                System.out.println("OPTIMIZING THE INDEX THIS CAN TAKE A COUPLE OF MINUTES");
+                indexLoaderDTO = new IndexLoaderUtil().IndexerLoaderUtil();
                 System.out.println("\n TASK COMPLETED...\n");
                 System.out.println("TYPE 0 TO EXIT...\n");
                 System.out.println("TYPE 1 TO SEE SOME STATS ...\n");
@@ -72,7 +89,7 @@ public class Main {
                 System.out.println("TYPE A K ... \n");
                 String K = br.readLine();
 
-                MergeListAlgorithm m = new MergeListAlgorithm();
+                MergeListAlgorithm m = new MergeListAlgorithm(indexLoaderDTO.getSearcher(), indexLoaderDTO.getPath());
                 m.runPrint(input, Integer.parseInt(K));
 
                 System.out.println("\nTASK COMPLETED...\n");

@@ -70,16 +70,6 @@ public class Statistics {
                columnsWrapper.columnsCount = columnsWrapper.columnsCount + u.getMaxDimensions().getColumn();
                rowsWrapper.rowsCount = rowsWrapper.rowsCount + u.getMaxDimensions().getRow();
 
-               /*
-                List<Integer> temp = columnsDistributionWrapper.columnsDistributionCountMap.get(u.getMaxDimensions().getColumn());
-                if(temp == null){
-                    temp = new ArrayList<>();
-                    temp.add(tablesWrapper.tablesCount);
-                    columnsDistributionWrapper.columnsDistributionCountMap.put(u.getMaxDimensions().getColumn(), temp);
-                }else {
-                    temp.add(tablesWrapper.tablesCount);
-                }*/
-
                 Integer temp = columnsDistributionWrapper.columnsDistributionCountMap.get(u.getMaxDimensions().getColumn());
                 if(temp == null){
                     temp = 1;
