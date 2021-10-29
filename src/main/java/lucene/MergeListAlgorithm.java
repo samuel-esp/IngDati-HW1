@@ -1,5 +1,6 @@
 package lucene;
 
+import com.google.common.base.Stopwatch;
 import global.GlobalVariables;
 import lombok.AllArgsConstructor;
 import org.apache.lucene.analysis.core.WhitespaceAnalyzer;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 @AllArgsConstructor
 public class MergeListAlgorithm {
@@ -36,11 +38,6 @@ public class MergeListAlgorithm {
         System.out.println(tokenList);
 
         //Per ogni token genero una mappa Token -> Lista<Documenti>
-        /*
-        IndexReader reader = DirectoryReader.open(FSDirectory.open(path));
-        IndexSearcher searcher = new IndexSearcher(reader);
-        searcher.setSimilarity(new ClassicSimilarity());*/
-
         HashMap<String, List<Integer>> map = new HashMap<>();
         for (String token : tokenList) {
 
@@ -87,7 +84,11 @@ public class MergeListAlgorithm {
 
     public void runPrint(String inputString, int K) throws IOException{
 
+
+        Stopwatch stopwatch = Stopwatch.createStarted();
+
         Map<Integer, Integer> topKSorted = this.run(inputString, K);
+        stopwatch.stop();
 
         int i = 0;
         for (Map.Entry<Integer, Integer> entry : topKSorted.entrySet()) {
@@ -99,6 +100,7 @@ public class MergeListAlgorithm {
             }
         }
 
+        System.out.println("Time Elapsed: "+ stopwatch.elapsed(TimeUnit.MILLISECONDS) +"ms");
 
     }
 
