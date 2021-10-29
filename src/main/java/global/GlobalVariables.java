@@ -12,7 +12,7 @@ public class GlobalVariables {
 
 
     public  GlobalVariables(){
-        this.path="target/idx2";
+        this.path="target/idx";
 
     }
 
