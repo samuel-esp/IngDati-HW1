@@ -89,12 +89,10 @@ public class MergeListAlgorithm {
 
         Map<Integer, Integer> topKSorted = this.run(inputString, K);
         stopwatch.stop();
-
-        int i = 0;
+        
         for (Map.Entry<Integer, Integer> entry : topKSorted.entrySet()) {
-            if(i!=K) {
+            if(entry.getValue()>=K) {
                 System.out.println("DOCUMENT NUMBER: " + entry.getKey().toString() + " REPETITIONS: " + entry.getValue().toString() + "\n");
-                i = i + 1;
             }else{
                 break;
             }
