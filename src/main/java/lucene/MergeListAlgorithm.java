@@ -33,6 +33,8 @@ public class MergeListAlgorithm {
 
         //Converto la string in token
         Converter c = new Converter();
+        inputString= inputString.replaceAll("[’']", " ");
+
         Set<String> tokenList = c.parseKeywords(new MyAnalyzer(), "Table", inputString);
         Path path = Paths.get(new GlobalVariables().getPath());
         System.out.println(tokenList);
