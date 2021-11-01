@@ -26,7 +26,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         System.out.println("LOADING THIS TASK CAN TAKE SOME MINUTES...\n");
-        IndexLoaderDTO indexLoaderDTO = new IndexLoaderUtil().IndexerLoaderUtil();
+        IndexLoaderDTO indexLoaderDTO = null;
         System.out.println("TYPE 0 TO EXIT...\n");
         System.out.println("TYPE 1 TO SEE SOME STATS ...\n");
         System.out.println("TYPE 2 TO START THE INDEXING PROCESS ...\n");
